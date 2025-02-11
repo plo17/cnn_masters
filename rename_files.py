@@ -1,5 +1,6 @@
 import os
 
+
 def rename_files_based_on_folder(directory_path):
     try:
         # Check if the provided path exists and is a directory
@@ -31,7 +32,6 @@ def rename_files_based_on_folder(directory_path):
                 print(f"The directory {root} does not contain any files.")
     except Exception as e:
         print(f"An error occurred: {e}")
-
 
 
 directory_path = input("Enter the path to the main directory: ")

@@ -1,7 +1,7 @@
 import tensorflow as tf
 import pathlib
 from tensorflow.keras import layers
-
+import matplotlib.pyplot as plt
 # path to images
 directory = "C:/Users/magda/Desktop/eggs"
 data_dir = pathlib.Path(directory).with_suffix('')
@@ -46,3 +46,29 @@ AUTOTUNE = tf.data.AUTOTUNE
 train_ds = train_ds.cache().prefetch(buffer_size=AUTOTUNE)
 val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 
+
+# Visualize one image per class
+fig, axes = plt.subplots(2, len(class_names) // 2 + len(class_names) % 2, figsize=(15, 6))
+axes = axes.flatten()
+selected_images = {}
+
+for images, labels in train_ds:
+    for img, label in zip(images, labels):
+        class_name = class_names[label.numpy()]
+        if class_name not in selected_images:
+            selected_images[class_name] = img
+        if len(selected_images) == len(class_names):
+            break
+    if len(selected_images) == len(class_names):
+        break
+
+for ax, (class_name, img) in zip(axes, selected_images.items()):
+    ax.imshow(img.numpy())
+    ax.set_title(class_name)
+    ax.axis("off")
+# Hide unused subplots
+for ax in axes[len(selected_images):]:
+    ax.axis("off")
+
+plt.tight_layout()
+plt.show()
