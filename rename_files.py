@@ -1,6 +1,5 @@
 import os
 
-
 def rename_files_based_on_folder(directory_path):
     try:
         # Check if the provided path exists and is a directory
