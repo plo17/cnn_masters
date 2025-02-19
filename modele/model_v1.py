@@ -5,8 +5,13 @@ from tensorflow.keras import Sequential
 from input_data import class_names, train_ds, val_ds
 from augmentation import data_augmentation
 
+import keras_tuner
+import keras
+
+
 def get_model():
     model = keras.Sequential([
+        data_augmentation,
         keras.layers.Conv2D(16, (3, 3), activation='relu', input_shape=(128, 128, 3)),
         keras.layers.MaxPooling2D(2, 2),
         keras.layers.Flatten(),
