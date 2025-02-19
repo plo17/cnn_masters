@@ -40,3 +40,5 @@ val_acc = history.history['val_accuracy']
 
 loss = history.history['loss']
 val_loss = history.history['val_loss']
+
+model.save('model_v1.h5')
