@@ -50,6 +50,14 @@ train_ds = train_ds.cache().prefetch(buffer_size=AUTOTUNE)
 val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 
 
+
+for images, labels in val_ds.take(1):
+    print("Batch shape (images):", images.shape)
+    print("Batch shape (labels):", labels.shape)
+    print("Example labels:", labels.numpy())
+
+
+
 """# Visualize one image per class
 fig, axes = plt.subplots(2, len(class_names) // 2 + len(class_names) % 2, figsize=(15, 6))
 axes = axes.flatten()
