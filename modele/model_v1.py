@@ -7,18 +7,19 @@ import tensorflow as tf
 from confusion_matrix import log_confusion_matrix
 
 
-num = 2
+num = 1
 run_name = f"model_{num}"
 log_dir = f"./logs/{run_name}"
-
 file_writer_cm = tf.summary.create_file_writer(log_dir)
 
 def get_model():
     model = keras.Sequential([
         keras.layers.Input(shape=(128,128,3)),
-        data_augmentation,
-        keras.layers.Conv2D(64, (2, 2), activation='relu'),
+        #data_augmentation,
+
+        keras.layers.Conv2D(32, (3, 3), activation='relu'),
         keras.layers.MaxPooling2D(2, 2),
+
         keras.layers.Flatten(),
         keras.layers.Dense(len(class_names), activation='softmax')
     ])
@@ -47,7 +48,7 @@ cm_callback = keras.callbacks.LambdaCallback(
     on_epoch_end=lambda epoch, logs: log_confusion_matrix(epoch, model, val_ds, class_names, file_writer_cm)
 )
 
-epochs = 30
+epochs = 50
 history = model.fit(
     train_ds,
     validation_data=val_ds,
@@ -63,5 +64,13 @@ loss = history.history['loss']
 val_loss = history.history['val_loss']
 
 print(f"Model zatrzymał trening na epoce: {len(history.history['loss'])}")
+model.save(f'model_{num}.keras')
 
-model.save('model_1.keras')
+
+def save_model_summary(model, filename=f"model_summary_{num}.txt"):
+    with open(filename, "w", encoding="utf-8") as f:
+        # Przekierowanie outputu do pliku
+        model.summary(print_fn=lambda x: f.write(x + "\n"))
+
+# Przykładowe wywołanie
+save_model_summary(model)

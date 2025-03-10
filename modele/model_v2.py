@@ -3,12 +3,14 @@ from tensorflow.keras import Sequential
 from tensorflow.keras.callbacks import TensorBoard, EarlyStopping
 from input_data import class_names, train_ds, val_ds
 from augmentation import data_augmentation
-import keras
+import tensorflow as tf
+from confusion_matrix import log_confusion_matrix
 
 num = 2
 run_name = f"model_{num}"
 log_dir = f"./logs/{run_name}"
 
+file_writer_cm = tf.summary.create_file_writer(log_dir)
 def get_model():
     model = keras.Sequential([
         keras.layers.Input(shape=(128, 128, 3)),
@@ -47,15 +49,19 @@ early_stop_callback = EarlyStopping(
     verbose=1
 )
 
+cm_callback = keras.callbacks.LambdaCallback(
+    on_epoch_end=lambda epoch, logs: log_confusion_matrix(epoch, model, val_ds, class_names, file_writer_cm)
+)
 
-epochs = 20
+epochs = 30
 history = model.fit(
     train_ds,
     validation_data=val_ds,
     epochs=epochs,
     verbose=2,
-    callbacks=[tensorboard_callback, early_stop_callback]
+    callbacks=[tensorboard_callback, early_stop_callback, cm_callback]
 )
+
 
 acc = history.history['accuracy']
 val_acc = history.history['val_accuracy']

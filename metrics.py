@@ -1,9 +1,9 @@
 import numpy as np
-from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score
+from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 from tensorflow import keras
 from input_data import val_ds
 
-model = keras.models.load_model('modele/model_v2.keras')
+model = keras.models.load_model('modele/model_1.keras')
 
 # Make predictions
 y_pred = model.predict(val_ds)
@@ -15,9 +15,8 @@ def extract_labels(dataset):
         labels.extend(label_batch.numpy())
     return np.array(labels)
 
-y_true = extract_labels(val_ds)  # Extract true labels
+y_true = extract_labels(val_ds)
 
-# Compute confusion matrix
 
 # Calculate metrics
 accuracy = accuracy_score(y_true, y_pred_classes)

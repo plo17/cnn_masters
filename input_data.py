@@ -33,10 +33,10 @@ val_ds = tf.keras.utils.image_dataset_from_directory(
 
 # Get class names
 class_names = train_ds.class_names
-print("CLASS NAMES\n", class_names)
+#print("CLASS NAMES\n", class_names)
 # Check the shape of an image batch
 image_batch, labels_batch = next(iter(train_ds))
-print(image_batch.shape)
+#print(image_batch.shape)
 
 
 #Standardize the data
@@ -46,15 +46,17 @@ train_ds = train_ds.map(lambda x, y: (normalization_layer(x), y))
 val_ds = val_ds.map(lambda x, y: (normalization_layer(x), y))
 
 AUTOTUNE = tf.data.AUTOTUNE
-train_ds = train_ds.cache().prefetch(buffer_size=AUTOTUNE)
-val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
+train_ds = train_ds.take(-1).cache().prefetch(buffer_size=AUTOTUNE)
+val_ds = val_ds.take(-1).cache().prefetch(buffer_size=AUTOTUNE)
 
+# Wyświetl nazwy klas i ich indeksy
+for index, class_name in enumerate(class_names):
+    print(f"Indeks: {index}, Klasa: {class_name}")
 
-
-for images, labels in val_ds.take(1):
+"""for images, labels in val_ds.take(1):
     print("Batch shape (images):", images.shape)
     print("Batch shape (labels):", labels.shape)
-    print("Example labels:", labels.numpy())
+    print("Example labels:", labels.numpy())"""
 
 
 
