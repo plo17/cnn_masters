@@ -49,15 +49,14 @@ AUTOTUNE = tf.data.AUTOTUNE
 train_ds = train_ds.take(-1).cache().prefetch(buffer_size=AUTOTUNE)
 val_ds = val_ds.take(-1).cache().prefetch(buffer_size=AUTOTUNE)
 
-# Wyświetl nazwy klas i ich indeksy
+"""#nazwy klas + indeksy
 for index, class_name in enumerate(class_names):
-    print(f"Indeks: {index}, Klasa: {class_name}")
+    print(f"Indeks: {index}, Klasa: {class_name}")"""
 
 """for images, labels in val_ds.take(1):
     print("Batch shape (images):", images.shape)
     print("Batch shape (labels):", labels.shape)
     print("Example labels:", labels.numpy())"""
-
 
 
 """# Visualize one image per class

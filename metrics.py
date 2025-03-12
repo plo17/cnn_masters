@@ -5,10 +5,6 @@ from input_data import val_ds
 
 model = keras.models.load_model('modele/model_1.keras')
 
-# Make predictions
-y_pred = model.predict(val_ds)
-y_pred_classes = np.argmax(y_pred, axis=1)  # Convert probabilities to class labels
-
 def extract_labels(dataset):
     labels = []
     for _, label_batch in dataset:
@@ -18,9 +14,14 @@ def extract_labels(dataset):
 y_true = extract_labels(val_ds)
 
 
+# Make predictions
+y_pred = model.predict(val_ds)
+y_pred_classes = np.argmax(y_pred, axis=1)
+
+
 # Calculate metrics
 accuracy = accuracy_score(y_true, y_pred_classes)
-precision = precision_score(y_true, y_pred_classes, average='weighted')  # You can change average as per your needs
+precision = precision_score(y_true, y_pred_classes, average='weighted')
 recall = recall_score(y_true, y_pred_classes, average='weighted')
 f1 = f1_score(y_true, y_pred_classes, average='weighted')
 
