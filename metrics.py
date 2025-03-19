@@ -4,7 +4,7 @@ from tensorflow import keras
 from input_data import val_ds
 from sql_save import model_metrics
 
-model = keras.models.load_model('modele/model_1.keras')
+model = keras.models.load_model('modele/model_3.keras')
 
 def extract_labels(dataset):
     labels = []
@@ -22,16 +22,16 @@ y_pred_classes = np.argmax(y_pred, axis=1)
 
 # Calculate metrics
 accuracy = accuracy_score(y_true, y_pred_classes)
-precision = precision_score(y_true, y_pred_classes, average='weighted')
+model_precision = precision_score(y_true, y_pred_classes, average='weighted')
 recall = recall_score(y_true, y_pred_classes, average='weighted')
 f1 = f1_score(y_true, y_pred_classes, average='weighted')
 
 
 # Print the metrics
 print(f"Accuracy: {accuracy:.2f}")
-print(f"Precision: {precision:.2f}")
+print(f"Precision: {model_precision:.2f}")
 print(f"Recall: {recall:.2f}")
 print(f"F1-Score: {f1:.2f}")
 
-
-model_metrics(f"model_{num}", accuracy, precision, recall, f1)
+num = "3"
+model_metrics(f"model_{num}", accuracy, model_precision, recall, f1)

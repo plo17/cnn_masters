@@ -8,7 +8,7 @@ import keras_tuner as kt
 from confusion_matrix import log_confusion_matrix
 from sql_save import training_results
 
-num = "auto"
+num = 2
 run_name = f"model_{num}"
 log_dir = f"./logs/{run_name}"
 file_writer_cm = tf.summary.create_file_writer(log_dir)

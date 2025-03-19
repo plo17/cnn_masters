@@ -5,7 +5,7 @@ from tensorflow.keras.preprocessing import image
 from input_data import class_names
 
 
-model = tf.keras.models.load_model('model_auto.keras')
+model = tf.keras.models.load_model('modele/model_2.keras')
 new_images_dir = "C:/Users/magda/Desktop/validation"
 
 
