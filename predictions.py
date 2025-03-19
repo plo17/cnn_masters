@@ -2,11 +2,10 @@ import tensorflow as tf
 import numpy as np
 import os
 from tensorflow.keras.preprocessing import image
-from tensorflow.keras.applications.imagenet_utils import preprocess_input
-from input_data import class_names  # Załaduj listę nazw klas
+from input_data import class_names
 
 
-model = tf.keras.models.load_model('modele/model_1.keras')
+model = tf.keras.models.load_model('model_auto.keras')
 new_images_dir = "C:/Users/magda/Desktop/validation"
 
 

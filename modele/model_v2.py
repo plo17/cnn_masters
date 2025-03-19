@@ -63,12 +63,20 @@ history = model.fit(
 )
 
 
-acc = history.history['accuracy']
-val_acc = history.history['val_accuracy']
+# Pobranie wyników z historii
+train_acc = history.history['accuracy'][-1]
+val_acc = history.history['val_accuracy'][-1]
+train_loss = history.history['loss'][-1]
+val_loss = history.history['val_loss'][-1]
 
-loss = history.history['loss']
-val_loss = history.history['val_loss']
+# Zapis do MySQL
+save_training_results("model_testowy", 5, train_acc, val_acc, train_loss, val_loss)
+print("Wyniki zapisane w bazie!")
 
 print(f"Model zatrzymał trening na epoce: {len(history.history['loss'])}")
 
 model.save('model_v2.keras')
+
+
+
+
